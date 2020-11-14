@@ -1,0 +1,19 @@
+{
+  "name": "question-tree-core",
+  "version": "1.0.5",
+  "description": "Tools to navigate a graph of questions.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d dist --no-comments"
+  },
+  "keywords": ["decision tree","front-end"],
+  "author": "Hans Brough",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1"
+  }
+}
