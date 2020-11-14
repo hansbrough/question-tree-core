@@ -7,8 +7,6 @@ const Questions = function() {
   this.fetching = null;
   //
   this.digest = (resp) => {
-    //console.log("Questions"," digest() resp:",resp);
-    //console.log("...this:",this)
     this.fetching = false;
     this.store = resp || resp.data;
     const {baseUrl} = this.options;
@@ -43,17 +41,12 @@ const Questions = function() {
   * will return 'plantId_5' question obj when method passed 'plantId_6' question obj
   */
   this.getFirstConditionalInPath = (question) => {
-    //console.log("Questions"," getFirstConditionalInPath: ",question);
     let node = question;
     if(question.conditional) {
-      //console.log("...question is conditional ------ what was previous id? ",question.previous);
       const prevQuestion = this.getNodeById(question.previous);
-      ////console.log("...prevQuestion:",prevQuestion);
       if(prevQuestion.conditional) {
-        ////console.log("... continue look back")
         node = this.getFirstConditionalInPath(prevQuestion);//continue recursive look back.
       } else {
-        ////console.log("...done")
         node = question;
       }
     }

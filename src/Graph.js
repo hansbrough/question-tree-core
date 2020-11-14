@@ -39,12 +39,10 @@ const Graph = function() {
   //const getId = () => (this.store && this.store.meta) ? this.store.meta.graph_id : null;
   // get module Object
   const getModuleByQid = (qid) => {
-    //console.log("getModuleByQid:",qid);
     const modNames = Object.keys(this.store);
     for(const mod of modNames) {
       const {questions} = this.store[mod];
       if(questions && !!questions.find(item => item.id === qid)) {
-        //console.log("...found mod:",this.store[mod])
         return this.store[mod];
       }
     }
@@ -69,10 +67,8 @@ const Graph = function() {
   * looks for last question with a 'next' prop.
   */
   this.getQidIsLastInModuleBasePath = qid => {
-    //console.log("Graph getQidIsLastInModuleBasePath qid:",qid);
     const {questions} = getModuleByQid(qid) || {};//get questions obj by destructuring
     const basePathQuestions = questions && questions.filter(q => q.next);
-    //console.log("...basePathQuestions:",basePathQuestions);
     const lastModQuestion = basePathQuestions && basePathQuestions.slice(-1).pop();
     return qid === (lastModQuestion && lastModQuestion.next);
   }
@@ -99,7 +95,6 @@ const Graph = function() {
   * 3. else use first module.
   */
   this.getNextModuleId = (moduleId) => {
-    ////console.log("Graph getNextModuleId moduleId:",moduleId);
     const store   = getStore();
     const modules = getModules();
     let nextId;
@@ -111,7 +106,6 @@ const Graph = function() {
     } else {
       nextId = modules && modules[0];
     }
-    ////console.log("...nextId:",nextId)
     return nextId;
   };
   /*
@@ -122,7 +116,6 @@ const Graph = function() {
   * given a module id and question id determine the next question.
   */
   this.getNextModuleQuestion = (modId, questionId) => {
-    ////console.log("Graph", " getNextModuleQuestion: ",modId, questionId);
     const questionSequence  = getQuestionsByModuleId(modId);
     return questionSequence.find((item) => item.id === questionId);
   };
@@ -142,13 +135,10 @@ const Graph = function() {
   * return question object given a question id
   */
   const getQuestionById = (id) => {
-    ////console.log("Graph", " getQuestionById:",id);
     const mods = Object.values(this.modules);
-    ////console.log("...mods:",mods);
     let question;
     for(const mod of mods) {
       const questions = getQuestionsByModuleId(mod)
-      ////console.log("...questions:",questions);
       question = questions && questions.find(q => q.id === id);
       if(question) {
         break;
@@ -164,9 +154,7 @@ const Graph = function() {
   * defaults to null value if question not found in graph base path (e.g. 'detour' question)
   */
   this.getSequentialEndPoint = question => {
-    ////console.log("Graph", " getSequentialEndPoint question:",question);
     const prevGraphQuestion = getQuestionById(question.previous);
-    ////console.log("...prevGraphQuestion:",prevGraphQuestion)
     return (prevGraphQuestion) ? prevGraphQuestion.next : null;
   };
 };
