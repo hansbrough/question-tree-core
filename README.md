@@ -2,7 +2,10 @@
 
 Navigate conditional paths through a json formatted graph of questions. For use with a web application.
 
+[React UI example w/this package](https://github.com/hansbrough/question-tree-react)
+
 [Older working example on Github Pages](https://hansbrough.github.io/question-tree/)
+
 [available on NPM](https://www.npmjs.com/package/question-tree-core)
 
 

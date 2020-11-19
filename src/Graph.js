@@ -17,9 +17,9 @@ const Graph = function() {
   };
   //
   this.fetch = (config_url) => {
-    if(!this.store && !this.fetching) {
+    if(config_url && !this.fetching) {
       this.fetching = true;
-      config_url = (config_url || '/data/graph/index') + '.json';
+      config_url = `${config_url}.json`;
       return fetch(config_url, {method:'get'})
       .then(resp => resp.json())
       .then(this.digest);
@@ -35,7 +35,10 @@ const Graph = function() {
   /*--getters---*/
   const getStore   = () => this.store;
   const getModules = () => this.modules;
-  this.getFirstQuestionInModule = (modId) => (modId && this.store && this.store[modId]) ? this.store[ modId ].questions[0] : null;
+  this.getFirstQuestionInModule = (modId) => {
+    return (modId && this.store && this.store[modId]) ? this.store[ modId ].questions[0] : null;
+  }
+  //this.getFirstQuestionInModule = (modId) => (modId && this.store && this.store[modId]) ? this.store[ modId ].questions[0] : null;
   //const getId = () => (this.store && this.store.meta) ? this.store.meta.graph_id : null;
   // get module Object
   const getModuleByQid = (qid) => {
@@ -102,7 +105,7 @@ const Graph = function() {
       nextId = store[moduleId].next;
     } else if(store && moduleId) {
       let currentIdx = store && Object.keys(store).indexOf(moduleId);
-      nextId = (currentIdx && modules[currentIdx+1]) || null;
+      nextId = currentIdx && modules[currentIdx+1];
     } else {
       nextId = modules && modules[0];
     }

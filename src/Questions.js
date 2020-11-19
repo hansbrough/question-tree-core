@@ -25,9 +25,9 @@ const Questions = function() {
   };
   //
   this.fetch = (config_url) => {
-    if(!this.store && !this.fetching) {
+    if(config_url && !this.fetching) {
       this.fetching = true;
-      config_url = (config_url || '/data/questions/index') + '.json';
+      config_url = `${config_url}.json`;
       return fetch(config_url, {method:'get'})
       .then(resp => resp.json())
       .then(this.digest);
@@ -59,6 +59,7 @@ const Questions = function() {
   */
   this.update = (question) => this.store[question.id] = question;
 
+  this.updateNodeById = (id, options={}) => id && Object.assign(this.store[id], options);
 };
 
 export default new Questions();
