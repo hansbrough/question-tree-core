@@ -165,6 +165,7 @@ const DecisionTree = function() {
 
   //clear any refs to prev vals
   const reset = () => {
+    setCurrentModuleId( Graph.getNextModuleId() );
     setDefaultScreen(defaultScreen);
     setCurrentQuestion();
     setHistory('clear');
@@ -185,12 +186,18 @@ const DecisionTree = function() {
     } else {
       const nextModuleId    = Graph.getNextModuleId( currentModuleId );
       const nextQuestionObj = getNextQuestionId( currentQuestion, config );
+      const {labelIdx}  = config;
+      const answer = Questions.getAnswerById(currentQuestion, labelIdx);
       if(nextQuestionObj.id) {//use next question in this module
         const graphNextQuestion = getNextQuestionFromGraph(nextQuestionObj) || {};
         Object.assign(question, nextQuestionObj, graphNextQuestion);
       } else if(nextModuleId && nextModuleId !== 'module_final') {//jump to next module
         setCurrentModuleId( nextModuleId );
         firstModuleQuestion = Graph.getFirstQuestionInModule(nextModuleId);
+        Object.assign(question, firstModuleQuestion);
+      } else if(answer.reset) {//return to first question in first module.
+        reset();
+        firstModuleQuestion = Graph.getFirstQuestionInModule(currentModuleId);
         Object.assign(question, firstModuleQuestion);
       } else {//account for last module.
         setCurrentModuleId( nextModuleId );
@@ -200,7 +207,8 @@ const DecisionTree = function() {
     }
 
     if(question) {
-      Object.assign(question, Questions.getNodeById(question.id), { module : currentModuleId }, config);
+      const moduleTopic = Graph.getModuleTopic(currentModuleId);
+      Object.assign(question, Questions.getNodeById(question.id), { module : currentModuleId }, {moduleTopic}, config);
       question.views++;
     }
 

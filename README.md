@@ -6,8 +6,6 @@ Navigate conditional paths through a json formatted graph of questions. For use 
 
 [Older working example on Github Pages](https://hansbrough.github.io/question-tree/)
 
-[available on NPM](https://www.npmjs.com/package/question-tree-core)
-
 
 ### Overview of the Pieces
 

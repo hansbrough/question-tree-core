@@ -38,6 +38,9 @@ const Graph = function() {
   this.getFirstQuestionInModule = (modId) => {
     return (modId && this.store && this.store[modId]) ? this.store[ modId ].questions[0] : null;
   }
+  this.getModuleTopic = (modId) => {
+    return (modId && this.store && this.store[modId]) ? this.store[ modId ].topic : null;
+  }
   //this.getFirstQuestionInModule = (modId) => (modId && this.store && this.store[modId]) ? this.store[ modId ].questions[0] : null;
   //const getId = () => (this.store && this.store.meta) ? this.store.meta.graph_id : null;
   // get module Object

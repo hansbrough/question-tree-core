@@ -1,6 +1,6 @@
 {
   "name": "question-tree-core",
-  "version": "1.1.0",
+  "version": "1.1.3",
   "description": "Tools to navigate a graph of questions.",
   "main": "index.js",
   "scripts": {
