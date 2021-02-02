@@ -17,6 +17,7 @@ const DecisionTree = function() {
   * fetch and ingest given Module Graph and Question set
   */
   this.fetch = (options={}) => {
+    console.log("Index fetch")
     const { base_url: baseUrl='', graph_path, question_set_path } = options;
     const graphPath = graph_path && `${baseUrl}${graph_path}`;
     const questionSetPath = question_set_path && `${baseUrl}${question_set_path}`;
@@ -43,7 +44,7 @@ const DecisionTree = function() {
   */
   const getNextQuestionFromGraph = (config) => {
     const nextQuestionId = (config) ? config.id : currentQuestion.next;
-    const question      = Graph.getNextModuleQuestion(currentModuleId, nextQuestionId);
+    const question      = Graph.getModuleQuestion(currentModuleId, nextQuestionId);
     return question;
   };
   /*

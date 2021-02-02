@@ -17,6 +17,7 @@ const Graph = function() {
   };
   //
   this.fetch = (config_url) => {
+    console.log("Graph fetch:",config_url)
     if(config_url && !this.fetching) {
       this.fetching = true;
       config_url = `${config_url}.json`;
@@ -120,17 +121,19 @@ const Graph = function() {
   this.getModuleQuestion = (modId, questionId) => getQuestionsByModuleId(modId).find(q => q.id === questionId);
   /*
   * given a module id and question id determine the next question.
+  * note: not currently used
   */
   this.getNextModuleQuestion = (modId, questionId) => {
-    const questionSequence  = getQuestionsByModuleId(modId);
-    return questionSequence.find((item) => item.id === questionId);
+    if(!modId || !questionId) return null;
+    const current = this.getModuleQuestion(modId, questionId) || {};
+    return this.getModuleQuestion(modId, current.next)
   };
   /*
   * determine the total number of questions in the graph
   * (not inclusive of conditional questions)
   * note: will count questions in unused modules
   */
-  this.getBasePathLength = () => this.modules.reduce((acc, modId) => {
+  this.getBasePathLength = () => this.modules && this.modules.reduce((acc, modId) => {
     return acc + this.store[modId]['questions' || []].length
   }, 0);
   /*
